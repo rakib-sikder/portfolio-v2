@@ -1,29 +1,13 @@
 "use client";
 
-import { useState, type MouseEvent } from "react";
 import Image from "next/image";
-import { motion, useMotionValue, useSpring } from "framer-motion";
+import { motion } from "framer-motion";
 import { projects } from "@/lib/projects";
 import { SectionHeading } from "./SectionHeading";
 
 export function WorkList() {
-  const [hovered, setHovered] = useState<number | null>(null);
-  const mx = useMotionValue(0);
-  const my = useMotionValue(0);
-  const previewX = useSpring(mx, { stiffness: 160, damping: 22, mass: 0.4 });
-  const previewY = useSpring(my, { stiffness: 160, damping: 22, mass: 0.4 });
-
-  function onMouseMove(e: MouseEvent<HTMLDivElement>) {
-    mx.set(e.clientX);
-    my.set(e.clientY);
-  }
-
   return (
-    <section
-      id="work"
-      className="relative px-6 sm:px-10 py-16 scroll-mt-6"
-      onMouseMove={onMouseMove}
-    >
+    <section id="work" className="relative px-6 sm:px-10 py-16 scroll-mt-6">
       <motion.div
         initial={{ opacity: 0, y: 16 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -41,8 +25,6 @@ export function WorkList() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.25 }}
             transition={{ duration: 0.45, delay: (i % 4) * 0.05 }}
-            onMouseEnter={() => setHovered(i)}
-            onMouseLeave={() => setHovered(null)}
             className="group relative grid sm:grid-cols-[80px_1fr] gap-4 sm:gap-8 py-8 px-2 -mx-2 rounded-xl transition-colors hover:bg-card"
           >
             <span className="font-mono text-sm text-muted group-hover:text-accent transition-colors">
@@ -67,14 +49,32 @@ export function WorkList() {
                 </div>
                 <div className="flex items-center gap-5">
                   {p.image && (
-                    <div className="relative hidden h-16 w-28 shrink-0 overflow-hidden rounded-lg border border-border sm:block">
-                      <Image
-                        src={p.image}
-                        alt={`${p.name} preview`}
-                        fill
-                        sizes="112px"
-                        className="object-cover object-top"
-                      />
+                    <div className="group/thumb relative hidden isolate sm:block">
+                      <div className="relative h-16 w-28 shrink-0 cursor-pointer overflow-hidden rounded-lg border border-border">
+                        <Image
+                          src={p.image}
+                          alt={`${p.name} preview`}
+                          fill
+                          sizes="112px"
+                          className="object-cover object-top"
+                        />
+                      </div>
+
+                      {/* Tablet-style zoom preview — same aspect ratio as the thumbnail, scaled up. */}
+                      <div className="pointer-events-none absolute bottom-full left-1/2 z-50 mb-4 -translate-x-1/2 translate-y-2 opacity-0 transition-all duration-300 ease-out group-hover/thumb:translate-y-0 group-hover/thumb:opacity-100">
+                        <div className="rounded-[22px] border-[10px] border-neutral-900 bg-neutral-900 shadow-2xl shadow-black/60 ring-1 ring-white/10">
+                          <div className="relative h-[192px] w-[336px] overflow-hidden rounded-[10px] bg-card">
+                            <Image
+                              src={p.image}
+                              alt={`${p.name} enlarged preview`}
+                              fill
+                              sizes="336px"
+                              className="object-cover object-top"
+                            />
+                          </div>
+                        </div>
+                        <div className="mx-auto mt-1.5 h-1 w-10 rounded-full bg-neutral-900" />
+                      </div>
                     </div>
                   )}
                   <div className="flex gap-5 text-sm font-medium shrink-0">
@@ -93,40 +93,6 @@ export function WorkList() {
           </motion.article>
         ))}
       </div>
-
-      <motion.div
-        style={{ left: previewX, top: previewY }}
-        className="pointer-events-none fixed z-50 hidden -translate-y-1/2 translate-x-6 lg:block"
-      >
-        <motion.div
-          animate={{
-            opacity: hovered !== null ? 1 : 0,
-            scale: hovered !== null ? 1 : 0.94,
-          }}
-          transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-          className="relative h-[190px] w-[300px] overflow-hidden rounded-xl border border-border shadow-2xl shadow-black/50 bg-card"
-        >
-          {projects.map(
-            (p, i) =>
-              p.image && (
-                <motion.div
-                  key={p.name}
-                  animate={{ opacity: hovered === i ? 1 : 0 }}
-                  transition={{ duration: 0.3, ease: "easeInOut" }}
-                  className="absolute inset-0"
-                >
-                  <Image
-                    src={p.image}
-                    alt={`${p.name} preview`}
-                    fill
-                    sizes="300px"
-                    className="object-cover object-top"
-                  />
-                </motion.div>
-              )
-          )}
-        </motion.div>
-      </motion.div>
     </section>
   );
 }
