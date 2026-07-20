@@ -39,39 +39,40 @@ export function WorkList() {
                 <span className="text-xs uppercase tracking-widest text-muted">{p.tag}</span>
               </div>
               <p className="text-muted mb-4 max-w-xl">{p.description}</p>
-              <div className="flex flex-wrap items-center justify-between gap-4">
-                <div className="flex flex-wrap gap-2">
-                  {p.tech.map((t) => (
-                    <span key={t} className="text-xs rounded-full border border-border px-2.5 py-1 text-muted">
-                      {t}
-                    </span>
-                  ))}
-                </div>
-                <div className="flex gap-5 text-sm font-medium shrink-0">
-                  {p.live && (
-                    <a href={p.live} target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">
-                      Live demo ↗
-                    </a>
-                  )}
-                  <a href={p.repo} target="_blank" rel="noopener noreferrer" className="hover:underline">
-                    Code ↗
-                  </a>
-                </div>
+              <div className="flex flex-wrap gap-2">
+                {p.tech.map((t) => (
+                  <span key={t} className="text-xs rounded-full border border-border px-2.5 py-1 text-muted">
+                    {t}
+                  </span>
+                ))}
               </div>
             </div>
 
-            {/* Thumbnail stretches to match this row's own height — permanent tablet-bezel frame, zooms in place on hover. */}
-            {p.image && (
-              <div className="relative hidden w-40 shrink-0 isolate overflow-hidden rounded-[14px] border-[6px] border-neutral-900 bg-neutral-900 shadow-md transition-transform duration-300 ease-out sm:block hover:z-50 hover:scale-[1.3] hover:shadow-2xl hover:shadow-black/60 hover:ring-1 hover:ring-white/10">
-                <Image
-                  src={p.image}
-                  alt={`${p.name} preview`}
-                  fill
-                  sizes="220px"
-                  className="object-cover object-top rounded-[8px]"
-                />
+            {/* Links sit directly beside the thumbnail so the two read as one group. Thumbnail height stretches to match this row's own height. */}
+            <div className="flex shrink-0 items-stretch gap-4">
+              <div className="flex shrink-0 items-center gap-5 self-center text-sm font-medium">
+                {p.live && (
+                  <a href={p.live} target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">
+                    Live demo ↗
+                  </a>
+                )}
+                <a href={p.repo} target="_blank" rel="noopener noreferrer" className="hover:underline">
+                  Code ↗
+                </a>
               </div>
-            )}
+
+              {p.image && (
+                <div className="relative hidden w-32 shrink-0 isolate overflow-hidden rounded-[14px] border-[6px] border-neutral-900 bg-neutral-900 shadow-md transition-transform duration-300 ease-out sm:block hover:z-50 hover:scale-[1.3] hover:shadow-2xl hover:shadow-black/60 hover:ring-1 hover:ring-white/10">
+                  <Image
+                    src={p.image}
+                    alt={`${p.name} preview`}
+                    fill
+                    sizes="180px"
+                    className="object-cover object-top rounded-[8px]"
+                  />
+                </div>
+              )}
+            </div>
           </motion.article>
         ))}
       </div>
