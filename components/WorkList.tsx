@@ -25,13 +25,13 @@ export function WorkList() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.25 }}
             transition={{ duration: 0.45, delay: (i % 4) * 0.05 }}
-            className="group relative grid sm:grid-cols-[80px_1fr] gap-4 sm:gap-8 py-8 px-2 -mx-2 rounded-xl transition-colors hover:bg-card"
+            className="group relative flex flex-col sm:flex-row gap-4 sm:gap-8 py-8 px-2 -mx-2 rounded-xl transition-colors hover:bg-card"
           >
-            <span className="font-mono text-sm text-muted group-hover:text-accent transition-colors">
+            <span className="self-start font-mono text-sm text-muted group-hover:text-accent transition-colors">
               {String(i + 1).padStart(2, "0")}
             </span>
 
-            <div>
+            <div className="flex-1 min-w-0">
               <div className="flex flex-wrap items-baseline justify-between gap-2 mb-2">
                 <h3 className="text-xl font-medium group-hover:text-accent transition-colors">
                   {p.name}
@@ -47,49 +47,31 @@ export function WorkList() {
                     </span>
                   ))}
                 </div>
-                <div className="flex items-center gap-5">
-                  {p.image && (
-                    <div className="group/thumb relative hidden isolate sm:block">
-                      <div className="relative h-16 w-28 shrink-0 cursor-pointer overflow-hidden rounded-lg border border-border">
-                        <Image
-                          src={p.image}
-                          alt={`${p.name} preview`}
-                          fill
-                          sizes="112px"
-                          className="object-cover object-top"
-                        />
-                      </div>
-
-                      {/* Tablet-style zoom preview — same aspect ratio as the thumbnail, scaled up. */}
-                      <div className="pointer-events-none absolute bottom-full left-1/2 z-50 mb-4 -translate-x-1/2 translate-y-2 opacity-0 transition-all duration-300 ease-out group-hover/thumb:translate-y-0 group-hover/thumb:opacity-100">
-                        <div className="rounded-[22px] border-[10px] border-neutral-900 bg-neutral-900 shadow-2xl shadow-black/60 ring-1 ring-white/10">
-                          <div className="relative h-[192px] w-[336px] overflow-hidden rounded-[10px] bg-card">
-                            <Image
-                              src={p.image}
-                              alt={`${p.name} enlarged preview`}
-                              fill
-                              sizes="336px"
-                              className="object-cover object-top"
-                            />
-                          </div>
-                        </div>
-                        <div className="mx-auto mt-1.5 h-1 w-10 rounded-full bg-neutral-900" />
-                      </div>
-                    </div>
-                  )}
-                  <div className="flex gap-5 text-sm font-medium shrink-0">
-                    {p.live && (
-                      <a href={p.live} target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">
-                        Live demo ↗
-                      </a>
-                    )}
-                    <a href={p.repo} target="_blank" rel="noopener noreferrer" className="hover:underline">
-                      Code ↗
+                <div className="flex gap-5 text-sm font-medium shrink-0">
+                  {p.live && (
+                    <a href={p.live} target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">
+                      Live demo ↗
                     </a>
-                  </div>
+                  )}
+                  <a href={p.repo} target="_blank" rel="noopener noreferrer" className="hover:underline">
+                    Code ↗
+                  </a>
                 </div>
               </div>
             </div>
+
+            {/* Thumbnail stretches to match this row's own height — permanent tablet-bezel frame, zooms in place on hover. */}
+            {p.image && (
+              <div className="relative hidden w-40 shrink-0 isolate overflow-hidden rounded-[14px] border-[6px] border-neutral-900 bg-neutral-900 shadow-md transition-transform duration-300 ease-out sm:block hover:z-50 hover:scale-[1.3] hover:shadow-2xl hover:shadow-black/60 hover:ring-1 hover:ring-white/10">
+                <Image
+                  src={p.image}
+                  alt={`${p.name} preview`}
+                  fill
+                  sizes="220px"
+                  className="object-cover object-top rounded-[8px]"
+                />
+              </div>
+            )}
           </motion.article>
         ))}
       </div>
