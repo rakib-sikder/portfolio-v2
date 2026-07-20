@@ -1,9 +1,45 @@
 "use client";
 
+import { useRef } from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { projects } from "@/lib/projects";
 import { SectionHeading } from "./SectionHeading";
+
+function ProjectThumbnail({ src, alt }: { src: string; alt: string }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const mx = useMotionValue(0.5);
+  const my = useMotionValue(0.5);
+  const springConfig = { stiffness: 200, damping: 20, mass: 0.4 };
+  const rotateX = useSpring(useTransform(my, [0, 1], [10, -10]), springConfig);
+  const rotateY = useSpring(useTransform(mx, [0, 1], [-10, 10]), springConfig);
+
+  const handleMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = ref.current?.getBoundingClientRect();
+    if (!rect) return;
+    mx.set((e.clientX - rect.left) / rect.width);
+    my.set((e.clientY - rect.top) / rect.height);
+  };
+
+  const reset = () => {
+    mx.set(0.5);
+    my.set(0.5);
+  };
+
+  return (
+    <motion.div
+      ref={ref}
+      onMouseMove={handleMove}
+      onMouseLeave={reset}
+      whileHover={{ scale: 1.3, zIndex: 50 }}
+      transition={{ type: "spring", stiffness: 220, damping: 20 }}
+      style={{ rotateX, rotateY, transformPerspective: 700 }}
+      className="relative hidden aspect-[16/10] w-56 shrink-0 isolate overflow-hidden rounded-[14px] border-[6px] border-neutral-900 bg-neutral-900 shadow-md hover:shadow-2xl hover:shadow-black/60 hover:ring-1 hover:ring-white/10 sm:block"
+    >
+      <Image src={src} alt={alt} fill sizes="260px" className="object-cover object-top rounded-[8px]" />
+    </motion.div>
+  );
+}
 
 export function WorkList() {
   return (
@@ -48,9 +84,9 @@ export function WorkList() {
               </div>
             </div>
 
-            {/* Links sit directly beside the thumbnail so the two read as one group. Thumbnail height stretches to match this row's own height. */}
-            <div className="flex shrink-0 items-stretch gap-4">
-              <div className="flex shrink-0 items-center gap-5 self-center text-sm font-medium">
+            {/* Links sit directly beside the thumbnail — laptop-ratio preview that tilts toward the cursor. */}
+            <div className="flex shrink-0 items-center gap-4">
+              <div className="flex shrink-0 items-center gap-5 text-sm font-medium">
                 {p.live && (
                   <a href={p.live} target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">
                     Live demo ↗
@@ -61,17 +97,7 @@ export function WorkList() {
                 </a>
               </div>
 
-              {p.image && (
-                <div className="relative hidden w-32 shrink-0 isolate overflow-hidden rounded-[14px] border-[6px] border-neutral-900 bg-neutral-900 shadow-md transition-transform duration-300 ease-out sm:block hover:z-50 hover:scale-[1.3] hover:shadow-2xl hover:shadow-black/60 hover:ring-1 hover:ring-white/10">
-                  <Image
-                    src={p.image}
-                    alt={`${p.name} preview`}
-                    fill
-                    sizes="180px"
-                    className="object-cover object-top rounded-[8px]"
-                  />
-                </div>
-              )}
+              {p.image && <ProjectThumbnail src={p.image} alt={`${p.name} preview`} />}
             </div>
           </motion.article>
         ))}
