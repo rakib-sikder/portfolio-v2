@@ -56,10 +56,19 @@ export const projects: Project[] = [
     name: "Slotwise",
     tag: "Full-stack / SaaS",
     description:
-      "A booking micro-SaaS with a real availability algorithm — server-side re-validated so two people can't win the same slot.",
-    tech: ["Next.js", "TypeScript"],
+      "A booking micro-SaaS with a real availability algorithm — server-side re-validated so two people can't win the same slot — wired end-to-end through real Stripe checkout into an admin dashboard.",
+    tech: ["Next.js", "Stripe", "TypeScript"],
     live: "https://slotwise-booking.vercel.app",
     repo: "https://github.com/rakib-sikder/slotwise-booking",
+  },
+  {
+    name: "Relay",
+    tag: "Full-stack / SaaS",
+    description:
+      "An email-infrastructure product demo — API key management, a searchable delivery log, and a React/HTML/plain-text preview for every send, all backed by real API routes.",
+    tech: ["Next.js", "TypeScript", "Tailwind v4"],
+    live: "https://relay-mail-three.vercel.app",
+    repo: "https://github.com/rakib-sikder/relay-mail",
   },
   {
     name: "Fieldstone",
@@ -69,5 +78,14 @@ export const projects: Project[] = [
     tech: ["Next.js", "React Context", "TypeScript"],
     live: "https://fieldstone-shop.vercel.app",
     repo: "https://github.com/rakib-sikder/fieldstone-shop",
+  },
+  {
+    name: "Bistro Boss",
+    tag: "Full-stack / E-commerce",
+    description:
+      "A restaurant ordering site — a real menu, a persistent cart, and a real Stripe checkout that confirms payment server-side before an order is created.",
+    tech: ["React", "Vite", "Stripe"],
+    live: "https://bistro-boss-pi.vercel.app",
+    repo: "https://github.com/rakib-sikder/bistro_boss",
   },
 ];
