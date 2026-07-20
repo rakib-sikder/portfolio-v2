@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 const navItems = [
   { href: "#about", label: "About", n: "01" },
   { href: "#work", label: "Selected Work", n: "02" },
@@ -14,7 +16,17 @@ export function Sidebar() {
   return (
     <aside className="lg:fixed lg:left-0 lg:top-0 lg:h-screen lg:w-[380px] flex flex-col justify-between px-6 sm:px-10 lg:px-14 py-10 lg:py-16">
       <div>
-        <h1 className="text-3xl font-semibold tracking-tight">Rakib Sikder</h1>
+        <div className="group relative h-16 w-16 shrink-0 overflow-hidden rounded-full border border-border">
+          <Image
+            src="https://avatars.githubusercontent.com/u/57081756?v=4"
+            alt="Rakib Sikder"
+            fill
+            sizes="64px"
+            className="object-cover grayscale transition-all duration-500 group-hover:grayscale-0"
+            priority
+          />
+        </div>
+        <h1 className="mt-5 text-3xl font-semibold tracking-tight">Rakib Sikder</h1>
         <p className="mt-2 text-lg text-foreground/90">Full-Stack &amp; AI Developer</p>
         <p className="mt-4 max-w-xs text-sm text-muted leading-relaxed">
           I build AI-powered products, automation tools, and interfaces that move well.

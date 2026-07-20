@@ -22,8 +22,12 @@ export function IntroStatement() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
-        className="font-mono text-xs uppercase tracking-[0.3em] text-accent mb-6"
+        className="flex items-center gap-2 font-mono text-xs uppercase tracking-[0.3em] text-accent mb-6"
       >
+        <span className="relative flex h-1.5 w-1.5">
+          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-60" />
+          <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent" />
+        </span>
         Available for freelance work
       </motion.p>
 

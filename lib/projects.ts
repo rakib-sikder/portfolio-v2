@@ -5,6 +5,7 @@ export interface Project {
   tech: string[];
   live?: string;
   repo: string;
+  image?: string;
 }
 
 export const projects: Project[] = [
@@ -16,6 +17,7 @@ export const projects: Project[] = [
     tech: ["Next.js", "Claude (tool-use)", "TypeScript"],
     live: "https://ai-lead-triage-agent.vercel.app",
     repo: "https://github.com/rakib-sikder/ai-lead-triage-agent",
+    image: "/projects/leadpilot.jpg",
   },
   {
     name: "DocChat",
@@ -25,6 +27,7 @@ export const projects: Project[] = [
     tech: ["Next.js", "Transformers.js", "Claude"],
     live: "https://ai-doc-chat-ecru.vercel.app",
     repo: "https://github.com/rakib-sikder/ai-doc-chat",
+    image: "/projects/docchat.jpg",
   },
   {
     name: "ai-chat-widget",
@@ -34,6 +37,7 @@ export const projects: Project[] = [
     tech: ["Vanilla JS", "Next.js", "Claude"],
     live: "https://ai-chat-widget-chi.vercel.app",
     repo: "https://github.com/rakib-sikder/ai-chat-widget",
+    image: "/projects/ai-chat-widget.jpg",
   },
   {
     name: "Orbit",
@@ -43,6 +47,7 @@ export const projects: Project[] = [
     tech: ["GSAP", "Framer Motion", "Next.js"],
     live: "https://animation-showcase-five.vercel.app",
     repo: "https://github.com/rakib-sikder/animation-showcase",
+    image: "/projects/orbit.jpg",
   },
   {
     name: "AI Page Extractor",
@@ -58,8 +63,9 @@ export const projects: Project[] = [
     description:
       "A booking micro-SaaS with a real availability algorithm — server-side re-validated so two people can't win the same slot — wired end-to-end through real Stripe checkout into an admin dashboard.",
     tech: ["Next.js", "Stripe", "TypeScript"],
-    live: "https://slotwise-booking.vercel.app",
+    live: "https://slotwise-booking-sigma.vercel.app",
     repo: "https://github.com/rakib-sikder/slotwise-booking",
+    image: "/projects/slotwise.jpg",
   },
   {
     name: "Relay",
@@ -69,6 +75,7 @@ export const projects: Project[] = [
     tech: ["Next.js", "TypeScript", "Tailwind v4"],
     live: "https://relay-mail-three.vercel.app",
     repo: "https://github.com/rakib-sikder/relay-mail",
+    image: "/projects/relay.jpg",
   },
   {
     name: "Fieldstone",
@@ -78,6 +85,7 @@ export const projects: Project[] = [
     tech: ["Next.js", "React Context", "TypeScript"],
     live: "https://fieldstone-shop.vercel.app",
     repo: "https://github.com/rakib-sikder/fieldstone-shop",
+    image: "/projects/fieldstone.jpg",
   },
   {
     name: "Bistro Boss",
@@ -87,5 +95,6 @@ export const projects: Project[] = [
     tech: ["React", "Vite", "Stripe"],
     live: "https://bistro-boss-pi.vercel.app",
     repo: "https://github.com/rakib-sikder/bistro_boss",
+    image: "/projects/bistro-boss.jpg",
   },
 ];
