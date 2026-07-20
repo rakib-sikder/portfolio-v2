@@ -10,15 +10,13 @@ export function WorkList() {
   const [hovered, setHovered] = useState<number | null>(null);
   const mx = useMotionValue(0);
   const my = useMotionValue(0);
-  const previewX = useSpring(mx, { stiffness: 280, damping: 28, mass: 0.6 });
-  const previewY = useSpring(my, { stiffness: 280, damping: 28, mass: 0.6 });
+  const previewX = useSpring(mx, { stiffness: 160, damping: 22, mass: 0.4 });
+  const previewY = useSpring(my, { stiffness: 160, damping: 22, mass: 0.4 });
 
   function onMouseMove(e: MouseEvent<HTMLDivElement>) {
     mx.set(e.clientX);
     my.set(e.clientY);
   }
-
-  const activeImage = hovered !== null ? projects[hovered].image : undefined;
 
   return (
     <section
@@ -52,27 +50,14 @@ export function WorkList() {
             </span>
 
             <div>
-              <div className="flex flex-wrap items-start justify-between gap-4 mb-2">
-                <div className="flex items-center gap-4 min-w-0">
-                  {p.image && (
-                    <div className="relative hidden h-14 w-20 shrink-0 overflow-hidden rounded-lg border border-border sm:block">
-                      <Image
-                        src={p.image}
-                        alt={`${p.name} preview`}
-                        fill
-                        sizes="80px"
-                        className="object-cover object-top"
-                      />
-                    </div>
-                  )}
-                  <h3 className="text-xl font-medium group-hover:text-accent transition-colors">
-                    {p.name}
-                  </h3>
-                </div>
-                <span className="text-xs uppercase tracking-widest text-muted shrink-0">{p.tag}</span>
+              <div className="flex flex-wrap items-baseline justify-between gap-2 mb-2">
+                <h3 className="text-xl font-medium group-hover:text-accent transition-colors">
+                  {p.name}
+                </h3>
+                <span className="text-xs uppercase tracking-widest text-muted">{p.tag}</span>
               </div>
               <p className="text-muted mb-4 max-w-xl">{p.description}</p>
-              <div className="flex flex-wrap items-center justify-between gap-3">
+              <div className="flex flex-wrap items-center justify-between gap-4">
                 <div className="flex flex-wrap gap-2">
                   {p.tech.map((t) => (
                     <span key={t} className="text-xs rounded-full border border-border px-2.5 py-1 text-muted">
@@ -80,15 +65,28 @@ export function WorkList() {
                     </span>
                   ))}
                 </div>
-                <div className="flex gap-5 text-sm font-medium">
-                  {p.live && (
-                    <a href={p.live} target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">
-                      Live demo ↗
-                    </a>
+                <div className="flex items-center gap-5">
+                  {p.image && (
+                    <div className="relative hidden h-16 w-28 shrink-0 overflow-hidden rounded-lg border border-border sm:block">
+                      <Image
+                        src={p.image}
+                        alt={`${p.name} preview`}
+                        fill
+                        sizes="112px"
+                        className="object-cover object-top"
+                      />
+                    </div>
                   )}
-                  <a href={p.repo} target="_blank" rel="noopener noreferrer" className="hover:underline">
-                    Code ↗
-                  </a>
+                  <div className="flex gap-5 text-sm font-medium shrink-0">
+                    {p.live && (
+                      <a href={p.live} target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">
+                        Live demo ↗
+                      </a>
+                    )}
+                    <a href={p.repo} target="_blank" rel="noopener noreferrer" className="hover:underline">
+                      Code ↗
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
@@ -102,21 +100,30 @@ export function WorkList() {
       >
         <motion.div
           animate={{
-            opacity: activeImage ? 1 : 0,
-            scale: activeImage ? 1 : 0.9,
+            opacity: hovered !== null ? 1 : 0,
+            scale: hovered !== null ? 1 : 0.94,
           }}
-          transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-          className="relative h-[180px] w-[280px] overflow-hidden rounded-xl border border-border shadow-2xl shadow-black/50 bg-card"
+          transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+          className="relative h-[190px] w-[300px] overflow-hidden rounded-xl border border-border shadow-2xl shadow-black/50 bg-card"
         >
-          {activeImage && (
-            <Image
-              key={activeImage}
-              src={activeImage}
-              alt="Project preview"
-              fill
-              sizes="280px"
-              className="object-cover object-top"
-            />
+          {projects.map(
+            (p, i) =>
+              p.image && (
+                <motion.div
+                  key={p.name}
+                  animate={{ opacity: hovered === i ? 1 : 0 }}
+                  transition={{ duration: 0.3, ease: "easeInOut" }}
+                  className="absolute inset-0"
+                >
+                  <Image
+                    src={p.image}
+                    alt={`${p.name} preview`}
+                    fill
+                    sizes="300px"
+                    className="object-cover object-top"
+                  />
+                </motion.div>
+              )
           )}
         </motion.div>
       </motion.div>
