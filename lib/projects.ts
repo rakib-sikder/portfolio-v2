@@ -14,7 +14,7 @@ export const projects: Project[] = [
     tag: "AI / Agent",
     description:
       "Classifies inbound leads, scores intent, and conditionally drafts replies — skipping cold/spam leads so the model isn't paying to write emails nobody needs.",
-    tech: ["Next.js", "Claude (tool-use)", "TypeScript"],
+    tech: ["Next.js", "Gemini (function-calling)", "TypeScript"],
     live: "https://ai-lead-triage-agent.vercel.app",
     repo: "https://github.com/rakib-sikder/ai-lead-triage-agent",
     image: "/projects/leadpilot.jpg",
@@ -24,7 +24,7 @@ export const projects: Project[] = [
     tag: "AI / RAG",
     description:
       "Upload a PDF, ask questions grounded strictly in its content. Embeddings run locally in the browser's server process — no per-chunk API cost.",
-    tech: ["Next.js", "Transformers.js", "Claude"],
+    tech: ["Next.js", "Transformers.js", "Gemini"],
     live: "https://ai-doc-chat-ecru.vercel.app",
     repo: "https://github.com/rakib-sikder/ai-doc-chat",
     image: "/projects/docchat.jpg",
@@ -34,7 +34,7 @@ export const projects: Project[] = [
     tag: "AI / Embeddable",
     description:
       "A white-labeled AI chat bubble any site can embed with one <script> tag — Shadow DOM isolated, multi-tenant by config, CORS locked per bot.",
-    tech: ["Vanilla JS", "Next.js", "Claude"],
+    tech: ["Vanilla JS", "Next.js", "Gemini"],
     live: "https://ai-chat-widget-chi.vercel.app",
     repo: "https://github.com/rakib-sikder/ai-chat-widget",
     image: "/projects/ai-chat-widget.jpg",
@@ -54,7 +54,7 @@ export const projects: Project[] = [
     tag: "Extension / Automation",
     description:
       "A Chrome extension that extracts structured data from any page by describing the fields you want — no per-site CSS selectors to maintain.",
-    tech: ["Manifest V3", "Vanilla JS", "Claude API"],
+    tech: ["Manifest V3", "Vanilla JS", "Gemini API"],
     repo: "https://github.com/rakib-sikder/ai-page-extractor",
   },
   {
