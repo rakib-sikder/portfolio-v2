@@ -1,4 +1,7 @@
+"use client";
+
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
 const navItems = [
   { href: "#about", label: "About", n: "01" },
@@ -13,6 +16,27 @@ const socials = [
 ];
 
 export function Sidebar() {
+  const [activeId, setActiveId] = useState("");
+
+  useEffect(() => {
+    const sections = navItems
+      .map((item) => document.querySelector(item.href))
+      .filter((el): el is Element => el !== null);
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActiveId(`#${entry.target.id}`);
+        });
+      },
+      // A narrow band around the viewport's middle decides which section is "current".
+      { rootMargin: "-40% 0px -55% 0px" }
+    );
+
+    sections.forEach((s) => observer.observe(s));
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <aside className="lg:fixed lg:left-0 lg:top-0 lg:h-screen lg:w-[380px] flex flex-col justify-between px-6 sm:px-10 lg:px-14 py-10 lg:py-16">
       <div>
@@ -35,18 +59,42 @@ export function Sidebar() {
 
         <nav className="mt-12 hidden lg:block">
           <ul className="space-y-4">
-            {navItems.map((item) => (
-              <li key={item.href}>
-                <a
-                  href={item.href}
-                  className="group flex items-center gap-3 text-sm text-muted hover:text-accent transition-colors"
-                >
-                  <span className="font-mono text-xs text-accent">{item.n}</span>
-                  <span className="h-px w-8 bg-border group-hover:w-12 group-hover:bg-accent transition-all" />
-                  <span className="uppercase tracking-widest group-hover:translate-x-1 transition-transform">{item.label}</span>
-                </a>
-              </li>
-            ))}
+            {navItems.map((item) => {
+              const active = activeId === item.href;
+              return (
+                <li key={item.href}>
+                  <a
+                    href={item.href}
+                    aria-current={active ? "true" : undefined}
+                    className={`group flex items-center gap-3 text-sm transition-colors ${
+                      active ? "text-foreground" : "text-muted hover:text-accent"
+                    }`}
+                  >
+                    <span
+                      className={`font-mono text-xs transition-colors ${
+                        active ? "text-accent" : "text-muted group-hover:text-accent"
+                      }`}
+                    >
+                      {item.n}
+                    </span>
+                    <span
+                      className={`h-px transition-all duration-300 ${
+                        active
+                          ? "w-12 bg-accent"
+                          : "w-8 bg-border group-hover:w-12 group-hover:bg-accent"
+                      }`}
+                    />
+                    <span
+                      className={`uppercase tracking-widest transition-transform ${
+                        active ? "translate-x-1" : "group-hover:translate-x-1"
+                      }`}
+                    >
+                      {item.label}
+                    </span>
+                  </a>
+                </li>
+              );
+            })}
           </ul>
         </nav>
 

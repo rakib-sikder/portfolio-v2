@@ -19,6 +19,7 @@
   --color-card: var(--card);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-serif: var(--font-instrument-serif);
 }
 
 html {
@@ -48,14 +49,18 @@ body::before {
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
 }
 
-@media (pointer: fine) {
-  body {
-    cursor: none;
-  }
-  a,
-  button {
-    cursor: none;
-  }
+/* The native cursor is hidden only while the custom cursor is actually running
+   (CustomCursor adds .has-cursor on <html> for fine pointers without reduced motion). */
+html.has-cursor body,
+html.has-cursor a,
+html.has-cursor button {
+  cursor: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
 }
 
 @keyframes marquee {
@@ -69,4 +74,23 @@ body::before {
 
 .animate-marquee {
   animation: marquee 22s linear infinite;
+}
+
+.marquee-mask {
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+}
+
+.marquee-mask:hover .animate-marquee {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .animate-marquee,
+  .animate-ping {
+    animation: none;
+  }
 }

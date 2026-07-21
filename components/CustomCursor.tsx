@@ -13,8 +13,14 @@ export function CustomCursor() {
 
   useEffect(() => {
     const isFine = window.matchMedia("(pointer: fine)").matches;
-    setEnabled(isFine);
-    if (!isFine) return;
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const active = isFine && !reduced;
+    setEnabled(active);
+    if (!active) return;
+
+    // globals.css hides the native cursor only while this class is present,
+    // so users never end up with no cursor at all.
+    document.documentElement.classList.add("has-cursor");
 
     const move = (e: MouseEvent) => {
       x.set(e.clientX);
@@ -28,6 +34,7 @@ export function CustomCursor() {
     window.addEventListener("mousemove", move);
     window.addEventListener("mouseover", over);
     return () => {
+      document.documentElement.classList.remove("has-cursor");
       window.removeEventListener("mousemove", move);
       window.removeEventListener("mouseover", over);
     };

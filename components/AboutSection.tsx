@@ -28,9 +28,13 @@ export function AboutSection() {
           actually click on rather than a slide deck.
         </p>
 
-        <div className="mt-8 flex flex-wrap gap-2 max-w-2xl">
+        <div className="mt-8 flex flex-wrap gap-2.5 max-w-2xl">
           {skills.map((s) => (
-            <span key={s} className="text-xs rounded-full border border-border px-3 py-1.5 text-muted">
+            <span
+              key={s}
+              className="flex items-center gap-2 text-sm rounded-full border border-border bg-card px-3.5 py-1.5 text-foreground/90"
+            >
+              <span aria-hidden className="text-accent text-[9px]">◆</span>
               {s}
             </span>
           ))}

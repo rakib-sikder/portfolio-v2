@@ -38,7 +38,7 @@ export function ContactSection() {
           <MagneticButton>
             <a
               href={`mailto:${EMAIL}`}
-              className="inline-block text-3xl sm:text-5xl font-semibold tracking-tight text-accent hover:opacity-90 transition-opacity break-all"
+              className="inline-block font-serif font-normal text-3xl sm:text-6xl tracking-tight text-accent hover:opacity-90 transition-opacity break-all"
             >
               {EMAIL}
             </a>
